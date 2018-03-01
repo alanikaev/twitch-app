@@ -1,4 +1,4 @@
-var link = 'https://api.twitch.tv/kraken/streams/csruhub2?client_id=lidc475jqml0yp0gdrg41zv7g2hj4g';
+var link = 'https://api.twitch.tv/kraken/streams/csruhub2?client_id=?';
 var channels = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
 
 var onlinebtn = document.querySelector('.online-btn');
