@@ -1,4 +1,4 @@
-.app {
+.app{
   position: fixed;
   top: 0;
   bottom: 0;
@@ -12,30 +12,35 @@
   border: transparent;
   border-radius: 3px;
 }
-.control {
+
+.control{
   display: flex;
   display: -webkit-flex;
   justify-content: space-between;
   padding: 15px 0px;
+
+  .control__btn{
+    width: 100px;
+    font-size: 14px;
+    padding: 10px;
+    background: #FFB020;
+    color: #fff;
+    border: transparent;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover{
+      background: #FFC300;
+      transition: background-color 0.5s ease 0s;
+    }
+  }
 }
-.control .control__btn {
-  width: 100px;
-  font-size: 14px;
-  padding: 10px;
-  background: #FFB020;
-  color: #fff;
-  border: transparent;
-  border-radius: 3px;
-  cursor: pointer;
-}
-.control .control__btn:hover {
-  background: #FFC300;
-  transition: background-color 0.5s ease 0s;
-}
-.hidden {
+
+.hidden{
   display: none;
 }
-.online__card {
+
+.online__card{
   display: flex;
   display: -webkit-flex;
   justify-content: space-around;
@@ -43,11 +48,13 @@
   padding: 20px 0px;
   background-color: #FFB020;
   margin-bottom: 2px;
+
+  &:active{
+    background-color: #FFF277;
+  }
 }
-.online__card:active {
-  background-color: #FFF277;
-}
-.offline__card {
+
+.offline__card{
   display: flex;
   display: -webkit-flex;
   justify-content: space-around;
@@ -55,16 +62,19 @@
   padding: 20px 0px;
   background-color: #F0F0F0;
   margin-bottom: 2px;
+
+  &:active{
+    background-color: #FFF277;
+  }
 }
-.offline__card:active {
-  background-color: #FFF277;
-}
-.img-container {
+
+.img-container{
   width: 50px;
   height: 50px;
-}
-.img-container .img {
-  width: 100%;
-  border-radius: 100%;
-  height: auto;
+
+  .img{
+    width: 100%;
+    border-radius: 100%;
+    height: auto;
+  }
 }

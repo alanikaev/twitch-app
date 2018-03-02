@@ -2,19 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Twitch App</title>
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./normalize.css">
 </head>
 <body>
   <div class="app">
-    <a href="" class="online-btn">Online</a>
-    <a href="" class="all-btn">All</a>
-    <div id="online">
+    <div class="control">
+      <button class="control__btn" data-category="online">Online</button>
+      <button class="control__btn" data-category="offline">Offline</button>
+      <button class="control__btn" data-category="all">All</button>
     </div>
-    <div id="all">
-      
-    </div>
+    <main class="main">
+      <div class="online">
+      </div>
+      <div class="offline hidden">
+      </div>
+      <div class="all hidden"></div>
+    </main>
   </div>
 <script src="./script.js"></script>
 </body>
 </html>
+
