@@ -1,12 +1,9 @@
 var channels = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
 
-var control = document.querySelector(".control");
-
 var online = document.querySelector(".online");
 var offline = document.querySelector(".offline");
-var all = document.querySelector(".all");
 
-getChannelInfo();
+var control = document.querySelector(".control");
 
 control.onclick = function(event){
 
@@ -16,77 +13,87 @@ control.onclick = function(event){
 
   if (elem.dataset.category == 'online'){
 
-    online.classList.remove("hidden");
     offline.classList.add("hidden");
-    all.classList.add("hidden");
+    online.classList.remove("hidden");
   }
 
   else if (elem.dataset.category == 'offline'){
 
     online.classList.add("hidden");
-    offline.classList.remove("hidden");
-    all.classList.add("hidden");  
+    offline.classList.remove("hidden");  
   }
 
   else{
-
-    online.classList.add("hidden");
-    offline.classList.add("hidden");
-    all.classList.remove("hidden");
+    online.classList.remove("hidden");
+    offline.classList.remove("hidden");
   }
 }
+
+getChannelsInfo();
 
 function makeURL(type, item){
   return `https://api.twitch.tv/kraken/${type}/${item}?client_id=?`;
 }
 
-function getChannelInfo(){
-
-  online.innerHTML = '';
-  offline.innerHTML = '';
-  all.innerHTML = '';
+function getChannelsInfo(){
 
   channels.forEach(function(item){
 
-    var request = new XMLHttpRequest();
+    var game,status;
 
-    request.open('GET', makeURL('streams', item), true);
+    var req = new XMLHttpRequest();
 
-    request.onload = function(){
-      if (request.status >= 200 && request.status < 400){
+    req.open('GET', makeURL("streams", item), false);
 
-        var res = JSON.parse(request.responseText);
+    req.onload = function(){
 
-        if (res.stream != null && res.stream != undefined){
+      if (req.status >= 200 && req.status < 400){
 
-          var elem = document.createElement("div");
-          elem.classList.add("online__card");
-          elem.innerHTML = `<div class="img-container"><img src="${res.stream.channel.logo}" alt="logo" class="img"></div><a href="${res.stream.channel.url}" class="link">${item}</a><p class="status">${res.stream.game}</p>`;
-          online.appendChild(elem);
+        var data = JSON.parse(req.responseText);
+
+        if (data.stream == null){
+          game = 'offline';
+          status = 'offline';
         }
 
-        else if (res.stream == null || res.stream == undefined){
-          
-          request.open('GET', makeURL('channels', item), true);
+        else if (data.stream == undefined){
+          game = 'Account Closed';
+          status = 'offline';
+        }
 
-          request.onload = function(){
-            if (request.status >= 200 && request.status < 400){
-              var res = JSON.parse(request.responseText);
-              
-              var elem = document.createElement("div");
-              elem.classList.add("offline__card");
-              elem.innerHTML = `<div class="img-container"><img src="${res.logo}" alt="logo" class="img"></div><a href="${res.url}" class="link">${item}</a>`;
-              offline.appendChild(elem);
-            };
-          }
-
-          request.send();
+        else{
+          game = data.stream.game;
+          status = 'online';
         }
       }
     }
 
-    request.send();
+    req.send();
 
-  });
+    req.open('GET', makeURL("channels", item), true)
 
+      req.onload = function(){
+
+        if (req.status >= 200 && req.status < 400){
+
+          var data = JSON.parse(req.responseText);
+
+          if (status === 'online'){
+            var elem = document.createElement("div");
+            elem.classList.add("online__card");
+            elem.innerHTML = `<div class="img-container"><img src="${data.logo}" alt="logo" class="img"></div><a href="${data.url}" class="link">${item}</a><p class="status">${game}</p>`;
+            online.appendChild(elem);
+          }
+
+          else if (status == 'offline'){
+            var elem = document.createElement("div");
+            elem.classList.add("offline__card");
+            elem.innerHTML = `<div class="img-container"><img src="${data.logo}" alt="logo" class="img"></div><a href="${data.url}" class="link">${item}</a><p class="status">${game}</p>`;
+            offline.appendChild(elem);         
+          }
+        }
+      }
+
+    req.send();      
+  })
 }
